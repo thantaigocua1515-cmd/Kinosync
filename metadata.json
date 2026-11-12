@@ -1,6 +1,7 @@
 {
-  "name": "KinoSync Studio — Trình Dựng Video Tự Động",
-  "description": "Studio dựng video tự động khớp nhạc MP3, hình ảnh, phụ đề thông minh và xuất video MP4 độ phân giải cao.",
-  "requestFramePermissions": ["microphone"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "name": "Kinosync Studio — Truyện chữ thành phim đọc truyện",
+  "description": "Biến truyện chữ thành video đọc truyện dài 60–90 phút với giọng đọc AI, phụ đề khớp từng câu và hình ảnh minh họa, xuất MP4 ngay trên trình duyệt.",
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

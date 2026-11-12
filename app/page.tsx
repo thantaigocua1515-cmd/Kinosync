@@ -1,5 +1,5 @@
-import KinoSyncStudio from '@/components/KinoSyncStudio';
+import StudioApp from '@/components/studio-app';
 
 export default function HomePage() {
-  return <KinoSyncStudio />;
+  return <StudioApp />;
 }

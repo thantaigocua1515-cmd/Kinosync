@@ -56,16 +56,16 @@ export default function StudioTimeline({
   return (
     <section
       aria-label="Dòng thời gian đa tầng"
-      className="border-t border-slate-800 bg-slate-900/95 px-6 py-4 select-none"
+      className="border-t border-line bg-surface/95 px-6 py-4 select-none"
     >
       {/* Timeline Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
-        <div className="flex items-center gap-3 text-xs text-slate-400">
-          <span className="font-semibold text-slate-200">
+        <div className="flex items-center gap-3 text-xs text-muted">
+          <span className="font-semibold text-ink">
             Dòng thời gian đồng bộ (Multi-Track Timeline)
           </span>
           <span aria-hidden="true">·</span>
-          <span className="font-mono tabular-nums text-amber-400">
+          <span className="font-mono tabular-nums text-gold">
             {formatDisplayTimecode(currentTime)} /{' '}
             {formatDisplayTimecode(safeDuration)}
           </span>
@@ -82,9 +82,9 @@ export default function StudioTimeline({
         <button
           type="button"
           onClick={onAutoSyncAll}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-ink bg-surface-2 hover:bg-surface-3 border border-line-strong rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer"
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <Sparkles className="w-3.5 h-3.5 text-gold" />
           Tự động khớp lại Nhạc, Ảnh & Phụ đề
         </button>
       </div>
@@ -92,17 +92,17 @@ export default function StudioTimeline({
       {/* Tracks Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[195px_1fr] gap-3 items-stretch pb-2">
         {/* Track Labels */}
-        <div className="hidden lg:flex flex-col justify-between py-6 pl-3 pr-2 text-xs text-slate-400 space-y-2">
-          <div className="h-14 flex items-center gap-2 font-medium text-slate-300">
-            <ImageIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+        <div className="hidden lg:flex flex-col justify-between py-6 pl-3 pr-2 text-xs text-muted space-y-2">
+          <div className="h-14 flex items-center gap-2 font-medium text-muted">
+            <ImageIcon className="w-3.5 h-3.5 text-gold shrink-0" />
             <span>Lớp hình ảnh & Cảnh</span>
           </div>
-          <div className="h-10 flex items-center gap-2 font-medium text-slate-300">
-            <Subtitles className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+          <div className="h-10 flex items-center gap-2 font-medium text-muted">
+            <Subtitles className="w-3.5 h-3.5 text-sage shrink-0" />
             <span>Lớp phụ đề (SRT)</span>
           </div>
-          <div className="h-10 flex items-center gap-2 font-medium text-slate-300">
-            <Music className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+          <div className="h-10 flex items-center gap-2 font-medium text-muted">
+            <Music className="w-3.5 h-3.5 text-ok shrink-0" />
             <span>Sóng âm thanh MP3</span>
           </div>
         </div>
@@ -112,10 +112,10 @@ export default function StudioTimeline({
           ref={trackContainerRef}
           onClick={handleTrackClick}
           data-testid="timeline-scrubber"
-          className="relative bg-slate-950 border border-slate-800 rounded-lg p-3 cursor-pointer overflow-hidden"
+          className="relative bg-canvas border border-line rounded-lg p-3 cursor-pointer overflow-hidden"
         >
           {/* Timecode Ruler */}
-          <div className="flex items-center justify-between text-[11px] font-mono tabular-nums text-slate-500 pb-2 mb-2 border-b border-slate-800/80">
+          <div className="flex items-center justify-between text-[11px] font-mono tabular-nums text-faint pb-2 mb-2 border-b border-line/80">
             {ticks.map((t, idx) => (
               <span key={idx}>{formatDisplayTimecode(t)}</span>
             ))}
@@ -123,7 +123,7 @@ export default function StudioTimeline({
 
           <div className="space-y-2.5">
             {/* Track 1: Visual Scenes */}
-            <div className="relative h-14 bg-slate-900/80 rounded border border-slate-800/90 overflow-hidden flex">
+            <div className="relative h-14 bg-surface/80 rounded border border-line/90 overflow-hidden flex">
               {scenes.map((scene, idx) => {
                 const widthPct =
                   ((scene.endTime - scene.startTime) / safeDuration) * 100;
@@ -145,10 +145,10 @@ export default function StudioTimeline({
                       onSeek(Number((scene.startTime + 0.05).toFixed(2)));
                     }}
                     style={{width: `${Math.max(4, widthPct)}%`}}
-                    className={`relative h-full border-r border-slate-800 group overflow-hidden transition-colors ${
+                    className={`relative h-full border-r border-line group overflow-hidden transition-colors ${
                       isSelected
-                        ? 'ring-1 ring-inset ring-amber-400 bg-slate-800/90'
-                        : 'hover:bg-slate-800/60'
+                        ? 'ring-1 ring-inset ring-gold bg-surface-2/90'
+                        : 'hover:bg-surface-2/60'
                     }`}
                   >
                     <img
@@ -158,15 +158,15 @@ export default function StudioTimeline({
                       className="absolute inset-0 w-full h-full object-cover opacity-45 group-hover:opacity-60 transition-opacity"
                     />
                     <div className="relative z-10 p-1.5 flex flex-col justify-between h-full bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent">
-                      <div className="flex items-center justify-between gap-1 text-[10px] text-slate-300 font-mono tabular-nums">
-                        <span className="truncate font-sans font-medium text-white">
+                      <div className="flex items-center justify-between gap-1 text-[10px] text-muted font-mono tabular-nums">
+                        <span className="truncate font-sans font-medium text-ink">
                           Cảnh {idx + 1}: {scene.title}
                         </span>
-                        <span className="shrink-0 text-amber-300/90">
+                        <span className="shrink-0 text-gold-soft/90">
                           {transLabel}
                         </span>
                       </div>
-                      <div className="text-[10px] text-slate-400 truncate">
+                      <div className="text-[10px] text-muted truncate">
                         {scene.source === 'library'
                           ? `Thư viện · Khớp: ${scene.matchedKeyword || 'Tự động'}`
                           : 'Ảnh tải lên'}
@@ -178,9 +178,9 @@ export default function StudioTimeline({
             </div>
 
             {/* Track 2: Subtitles */}
-            <div className="relative h-10 bg-slate-900/80 rounded border border-slate-800/90 overflow-hidden">
+            <div className="relative h-10 bg-surface/80 rounded border border-line/90 overflow-hidden">
               {subtitles.length === 0 ? (
-                <div className="h-full flex items-center justify-center text-xs text-slate-500">
+                <div className="h-full flex items-center justify-center text-xs text-faint">
                   Chưa có phụ đề — Nhấn &ldquo;Tự động tạo phụ đề từ giọng nói&rdquo; để nhận diện âm thanh
                 </div>
               ) : (
@@ -199,8 +199,8 @@ export default function StudioTimeline({
                       }}
                       className={`absolute top-1 bottom-1 px-2 rounded border text-[11px] flex items-center truncate transition-colors ${
                         isActive
-                          ? 'bg-sky-500/25 border-sky-400 text-sky-100 font-medium'
-                          : 'bg-slate-800/90 border-slate-700 text-slate-300'
+                          ? 'bg-sky-500/25 border-sage text-sky-100 font-medium'
+                          : 'bg-surface-2/90 border-line-strong text-muted'
                       }`}
                       title={sub.text}
                     >
@@ -212,7 +212,7 @@ export default function StudioTimeline({
             </div>
 
             {/* Track 3: Audio Waveform */}
-            <div className="relative h-10 bg-slate-900/80 rounded border border-slate-800/90 px-2 flex items-center gap-[2px]">
+            <div className="relative h-10 bg-surface/80 rounded border border-line/90 px-2 flex items-center gap-[2px]">
               {waveform.map((val, idx) => {
                 const barProgress = idx / waveform.length;
                 const isPlayed = barProgress <= currentTime / safeDuration;
@@ -221,7 +221,7 @@ export default function StudioTimeline({
                     key={idx}
                     style={{height: `${Math.max(18, Math.round(val * 85))}%`}}
                     className={`flex-1 rounded-xs transition-colors ${
-                      isPlayed ? 'bg-emerald-400' : 'bg-slate-700'
+                      isPlayed ? 'bg-ok' : 'bg-surface-3'
                     }`}
                   />
                 );
@@ -232,9 +232,9 @@ export default function StudioTimeline({
           {/* Playhead Vertical Line */}
           <div
             style={{left: `${playheadPercent}%`}}
-            className="pointer-events-none absolute top-0 bottom-0 w-[2px] bg-amber-400 z-20"
+            className="pointer-events-none absolute top-0 bottom-0 w-[2px] bg-gold z-20"
           >
-            <div className="w-3 h-3 -ml-[5px] bg-amber-400 rotate-45 rounded-xs" />
+            <div className="w-3 h-3 -ml-[5px] bg-gold rotate-45 rounded-xs" />
           </div>
         </div>
       </div>

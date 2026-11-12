@@ -1,3 +1,167 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Kinosync design tokens — "phòng chiếu đêm": nền mực, chữ ngà, điểm nhấn vàng
+   đèn chiếu. Mọi cặp màu chữ/nền chính đều đạt tương phản WCAG AA.
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-canvas: #090a0c;
+  --color-surface: #101215;
+  --color-surface-2: #15181d;
+  --color-surface-3: #1c2027;
+  --color-line: #252932;
+  --color-line-strong: #363b46;
+
+  --color-ink: #f4f1e9;
+  --color-muted: #aaa69d;
+  --color-faint: #7c7a74;
+
+  --color-gold: #e7b25f;
+  --color-gold-soft: #f5d49f;
+  --color-gold-deep: #a97c33;
+  --color-sage: #8dafa6;
+  --color-clay: #cd7c64;
+  --color-ok: #94c180;
+  --color-danger: #e5785f;
+
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-display-face), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-mono-face), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --shadow-panel: 0 30px 80px -48px rgba(0, 0, 0, 0.95);
+  --shadow-lift: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05" 1, "ss01" 1;
+    background-image:
+      radial-gradient(
+        70rem 38rem at 12% -12%,
+        rgba(231, 178, 95, 0.11),
+        transparent 62%
+      ),
+      radial-gradient(
+        55rem 34rem at 102% -4%,
+        rgba(141, 175, 166, 0.08),
+        transparent 58%
+      );
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(231, 178, 95, 0.3);
+    color: #fff9ee;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  input[type="range"] {
+    accent-color: var(--color-gold);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .panel {
+    border-radius: 1.25rem;
+    border: 1px solid var(--color-line);
+    background: color-mix(in oklab, var(--color-surface) 88%, transparent);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: blur(10px);
+  }
+
+  .panel-quiet {
+    border-radius: 1rem;
+    border: 1px solid var(--color-line);
+    background: color-mix(in oklab, var(--color-surface-2) 70%, transparent);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-line) 12%,
+      var(--color-line) 88%,
+      transparent
+    );
+  }
+
+  .display-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #363b46 transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background: #363b46;
+    border-radius: 999px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .film-grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

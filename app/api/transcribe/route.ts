@@ -1,20 +1,32 @@
 import {GoogleGenAI} from '@google/genai';
-import {NextRequest, NextResponse} from 'next/server';
+import {NextResponse} from 'next/server';
 import {
   parseSrtOrTextToSubtitles,
   DEFAULT_DEMO_SUBTITLES_SRT,
 } from '@/lib/video-engine';
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  httpOptions: {
-    headers: {
-      'User-Agent': 'aistudio-build',
-    },
-  },
-});
+export const runtime = 'nodejs';
+export const maxDuration = 60;
 
-export async function POST(req: NextRequest) {
+let client: GoogleGenAI | null = null;
+
+function getClient(): GoogleGenAI {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      'Máy chủ chưa có GEMINI_API_KEY. Thêm biến môi trường này trong Vercel → Settings → Environment Variables.'
+    );
+  }
+  if (!client) {
+    client = new GoogleGenAI({
+      apiKey,
+      httpOptions: {headers: {'User-Agent': 'kinosync'}},
+    });
+  }
+  return client;
+}
+
+export async function POST(req: Request) {
   try {
     const body = await req.json();
     const {
@@ -44,19 +56,19 @@ export async function POST(req: NextRequest) {
       ? base64Audio.split(',')[1]
       : base64Audio;
 
-    const audioPart = {
-      inlineData: {
-        mimeType: mimeType || 'audio/mp3',
-        data: cleanBase64,
-      },
-    };
+    const promptText = `Hãy nhận diện giọng nói trong file âm thanh này (tổng thời lượng khoảng ${Math.round(
+      durationSec
+    )} giây) và xuất ra định dạng phụ đề SRT chuẩn (mốc thời gian HH:MM:SS,mmm --> HH:MM:SS,mmm cho từng câu ngắn gọn 6-14 từ). Nếu âm thanh là nhạc không lời, hãy tạo 5 câu phụ đề tiếng Việt khớp thời lượng ${Math.round(
+      durationSec
+    )} giây. Chỉ trả về nội dung SRT, không giải thích thêm.`;
 
-    const promptText = `Hãy nhận diện giọng nói trong file âm thanh này (tổng thời lượng khoảng ${Math.round(durationSec)} giây) và xuất ra định dạng phụ đề SRT chuẩn (có mốc thời gian HH:MM:SS,mmm --> HH:MM:SS,mmm cho từng câu ngắn gọn từ 6-14 từ). Nếu âm thanh là nhạc không lời hoặc không rõ tiếng nói, hãy tạo 5 câu phụ đề truyền cảm hứng bằng tiếng Việt khớp với giai điệu và thời lượng ${Math.round(durationSec)} giây theo chuẩn SRT. Chỉ trả về nội dung SRT, không giải thích thêm.`;
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.5-transcribe',
+    const response = await getClient().models.generateContent({
+      model: process.env.GEMINI_TRANSCRIBE_MODEL || 'gemini-2.5-flash',
       contents: {
-        parts: [audioPart, {text: promptText}],
+        parts: [
+          {inlineData: {mimeType: mimeType || 'audio/mp3', data: cleanBase64}},
+          {text: promptText},
+        ],
       },
     });
 
@@ -74,7 +86,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       subtitles: parsed,
       rawSrt: cleanedSrt,
-      source: 'gemini-3.5-transcribe',
+      source: 'gemini',
     });
   } catch (error: unknown) {
     const message =

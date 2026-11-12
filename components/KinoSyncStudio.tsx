@@ -614,7 +614,7 @@ export default function KinoSyncStudio() {
     scenes.find((s) => s.id === selectedSceneId) || scenes[0] || null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="flex flex-col">
       {/* Hidden synchronized HTML5 Audio element */}
       {audioUrl && (
         <audio
@@ -627,27 +627,27 @@ export default function KinoSyncStudio() {
       )}
 
       {/* TOP BAR CONTRACT: Strictly 3 zones separated by gap-8 */}
-      <header className="flex items-center justify-between gap-8 px-6 py-3.5 border-b border-slate-800 bg-slate-900">
+      <header className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-surface/70 px-4 py-2.5 backdrop-blur">
         {/* Zone 1: Single text element wordmark */}
         <a
           href="#studio"
-          className="text-lg font-bold tracking-tight text-white whitespace-nowrap shrink-0"
+          className="text-lg font-bold tracking-tight text-ink whitespace-nowrap shrink-0"
           style={{fontFamily: 'var(--font-display), sans-serif'}}
         >
-          KinoSync Studio
+          Dự án dựng thủ công
         </a>
 
         {/* Zone 2: 4 concise single-line navigation links */}
         <nav
           aria-label="Điều hướng trình dựng video"
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300"
+          className="hidden md:flex items-center gap-6 text-sm font-medium text-muted"
         >
           <button
             type="button"
             onClick={() => setActiveTab('audio-sub')}
-            className={`hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`hover:text-ink transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               activeTab === 'audio-sub'
-                ? 'text-white underline underline-offset-8 decoration-amber-400 decoration-2'
+                ? 'text-ink underline underline-offset-8 decoration-gold decoration-2'
                 : ''
             }`}
           >
@@ -656,9 +656,9 @@ export default function KinoSyncStudio() {
           <button
             type="button"
             onClick={() => setActiveTab('images-library')}
-            className={`hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`hover:text-ink transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               activeTab === 'images-library'
-                ? 'text-white underline underline-offset-8 decoration-amber-400 decoration-2'
+                ? 'text-ink underline underline-offset-8 decoration-gold decoration-2'
                 : ''
             }`}
           >
@@ -667,9 +667,9 @@ export default function KinoSyncStudio() {
           <button
             type="button"
             onClick={() => setActiveTab('transitions-effects')}
-            className={`hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`hover:text-ink transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               activeTab === 'transitions-effects'
-                ? 'text-white underline underline-offset-8 decoration-amber-400 decoration-2'
+                ? 'text-ink underline underline-offset-8 decoration-gold decoration-2'
                 : ''
             }`}
           >
@@ -677,7 +677,7 @@ export default function KinoSyncStudio() {
           </button>
           <a
             href="#timeline-section"
-            className="hover:text-white transition-colors whitespace-nowrap shrink-0"
+            className="hover:text-ink transition-colors whitespace-nowrap shrink-0"
           >
             Dòng thời gian
           </a>
@@ -688,7 +688,7 @@ export default function KinoSyncStudio() {
           <button
             type="button"
             onClick={() => setIsExportModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
             <Film className="w-3.5 h-3.5" />
             Xuất Video MP4
@@ -699,27 +699,27 @@ export default function KinoSyncStudio() {
       {/* MAIN STUDIO WORKSPACE (2-Column Split on Desktop + Multi-Track Timeline Below) */}
       <main
         id="studio"
-        className="flex-1 flex flex-col max-w-[1440px] w-full mx-auto"
+        className="mt-4 flex flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-surface/50"
       >
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 items-stretch">
           {/* LEFT WORKSPACE PANEL: Inputs, Auto-Subtitles, Smart Stock Library & Effects (5 cols) */}
           <aside
             aria-label="Bảng điều khiển dữ liệu đầu vào và hiệu ứng"
-            className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-900/60 flex flex-col"
+            className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-line bg-surface/60 flex flex-col"
           >
             {/* Segmented Mode Selector */}
-            <div className="p-4 border-b border-slate-800">
-              <div className="grid grid-cols-3 gap-1 p-1 bg-slate-950 border border-slate-800 rounded-lg">
+            <div className="p-4 border-b border-line">
+              <div className="grid grid-cols-3 gap-1 p-1 bg-canvas border border-line rounded-lg">
                 <button
                   type="button"
                   onClick={() => setActiveTab('audio-sub')}
                   className={`flex items-center justify-center gap-1.5 py-2 px-2.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     activeTab === 'audio-sub'
-                      ? 'bg-slate-800 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-surface-2 text-ink shadow-xs'
+                      : 'text-muted hover:text-ink'
                   }`}
                 >
-                  <Music className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <Music className="w-3.5 h-3.5 text-gold shrink-0" />
                   <span>Nhạc & Phụ đề</span>
                 </button>
 
@@ -728,11 +728,11 @@ export default function KinoSyncStudio() {
                   onClick={() => setActiveTab('images-library')}
                   className={`flex items-center justify-center gap-1.5 py-2 px-2.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     activeTab === 'images-library'
-                      ? 'bg-slate-800 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-surface-2 text-ink shadow-xs'
+                      : 'text-muted hover:text-ink'
                   }`}
                 >
-                  <ImageIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <ImageIcon className="w-3.5 h-3.5 text-gold shrink-0" />
                   <span>Ảnh & Thư viện</span>
                 </button>
 
@@ -741,11 +741,11 @@ export default function KinoSyncStudio() {
                   onClick={() => setActiveTab('transitions-effects')}
                   className={`flex items-center justify-center gap-1.5 py-2 px-2.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     activeTab === 'transitions-effects'
-                      ? 'bg-slate-800 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-surface-2 text-ink shadow-xs'
+                      : 'text-muted hover:text-ink'
                   }`}
                 >
-                  <Sliders className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <Sliders className="w-3.5 h-3.5 text-gold shrink-0" />
                   <span>Hiệu ứng & Cảnh</span>
                 </button>
               </div>
@@ -760,28 +760,28 @@ export default function KinoSyncStudio() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-sm font-semibold text-white"
+                        className="text-sm font-semibold text-ink"
                         style={{fontFamily: 'var(--font-display), sans-serif'}}
                       >
                         01. Nguồn âm thanh (MP3 / WAV)
                       </h2>
-                      <span className="text-xs font-mono tabular-nums text-slate-400">
+                      <span className="text-xs font-mono tabular-nums text-muted">
                         Thời lượng: {duration}s
                       </span>
                     </div>
 
-                    <div className="p-3.5 bg-slate-950 border border-slate-800 rounded-lg space-y-3">
+                    <div className="p-3.5 bg-canvas border border-line rounded-lg space-y-3">
                       <div className="flex items-center justify-between gap-2 text-xs">
-                        <span className="text-slate-200 font-medium truncate">
+                        <span className="text-ink font-medium truncate">
                           {audioName}
                         </span>
-                        <span className="text-slate-400 font-mono tabular-nums shrink-0">
+                        <span className="text-muted font-mono tabular-nums shrink-0">
                           {isDemoAudio ? 'Âm thanh mẫu' : 'Tệp tải lên'}
                         </span>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2">
-                        <label className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0">
+                        <label className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-950 bg-gold hover:bg-gold-soft rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0">
                           <Upload className="w-3.5 h-3.5" />
                           <span>Tải lên file MP3 / WAV</span>
                           <input
@@ -796,12 +796,12 @@ export default function KinoSyncStudio() {
                           type="button"
                           disabled={isGeneratingTts || subtitles.length === 0}
                           onClick={handleGenerateVoiceoverFromSubtitles}
-                          className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 border border-slate-700 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                          className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-ink bg-surface-2 hover:bg-surface-3 disabled:opacity-50 border border-line-strong rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
                         >
                           {isGeneratingTts ? (
-                            <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
+                            <Loader2 className="w-3.5 h-3.5 animate-spin text-gold" />
                           ) : (
-                            <Mic className="w-3.5 h-3.5 text-amber-400" />
+                            <Mic className="w-3.5 h-3.5 text-gold" />
                           )}
                           <span>Tạo giọng thuyết minh từ phụ đề</span>
                         </button>
@@ -810,21 +810,21 @@ export default function KinoSyncStudio() {
                   </div>
 
                   {/* Divider */}
-                  <div className="border-t border-slate-800/80" />
+                  <div className="border-t border-line/80" />
 
                   {/* Section 02: Subtitles & Automatic Speech Recognition */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between gap-2">
                       <div>
                         <h2
-                          className="text-sm font-semibold text-white"
+                          className="text-sm font-semibold text-ink"
                           style={{
                             fontFamily: 'var(--font-display), sans-serif',
                           }}
                         >
                           02. Phụ đề & Nhận diện giọng nói tự động
                         </h2>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-muted mt-0.5">
                           Nhập tệp .SRT hoặc tự động tạo phụ đề từ giọng nói trong file âm thanh
                         </p>
                       </div>
@@ -836,7 +836,7 @@ export default function KinoSyncStudio() {
                         type="button"
                         disabled={isTranscribing}
                         onClick={handleAutoGenerateSubtitlesFromAudio}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 disabled:opacity-60 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft disabled:opacity-60 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
                       >
                         {isTranscribing ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -850,8 +850,8 @@ export default function KinoSyncStudio() {
                         </span>
                       </button>
 
-                      <label className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0">
-                        <Subtitles className="w-3.5 h-3.5 text-sky-400" />
+                      <label className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-ink bg-surface-2 hover:bg-surface-3 border border-line-strong rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0">
+                        <Subtitles className="w-3.5 h-3.5 text-sage" />
                         <span>Nhập file .SRT / .TXT</span>
                         <input
                           type="file"
@@ -871,7 +871,7 @@ export default function KinoSyncStudio() {
                               'Đã xóa phụ đề. Nhấn "Tự động tạo phụ đề từ giọng nói" để hệ thống tạo lại từ âm thanh.'
                             );
                           }}
-                          className="inline-flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-slate-400 hover:text-rose-300 bg-slate-950 hover:bg-slate-900 border border-slate-800 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                          className="inline-flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-muted hover:text-danger bg-canvas hover:bg-surface border border-line rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                           <span>Xóa phụ đề</span>
@@ -881,14 +881,14 @@ export default function KinoSyncStudio() {
 
                     {/* Mode Switch: Timed Segments vs Raw SRT Text */}
                     <div className="flex items-center justify-between pt-1">
-                      <div className="flex items-center gap-1 p-0.5 bg-slate-950 border border-slate-800 rounded-md">
+                      <div className="flex items-center gap-1 p-0.5 bg-canvas border border-line rounded-md">
                         <button
                           type="button"
                           onClick={() => setSubtitleEditMode('segments')}
                           className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                             subtitleEditMode === 'segments'
-                              ? 'bg-slate-800 text-white'
-                              : 'text-slate-400 hover:text-slate-200'
+                              ? 'bg-surface-2 text-ink'
+                              : 'text-muted hover:text-ink'
                           }`}
                         >
                           Danh sách câu ({subtitles.length})
@@ -901,8 +901,8 @@ export default function KinoSyncStudio() {
                           }}
                           className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                             subtitleEditMode === 'raw'
-                              ? 'bg-slate-800 text-white'
-                              : 'text-slate-400 hover:text-slate-200'
+                              ? 'bg-surface-2 text-ink'
+                              : 'text-muted hover:text-ink'
                           }`}
                         >
                           Soạn thảo SRT / Văn bản
@@ -931,7 +931,7 @@ export default function KinoSyncStudio() {
                           setSubtitles(updated);
                           handleAutoSyncAll(updated, uploadedImages, duration);
                         }}
-                        className="inline-flex items-center gap-1 text-xs font-medium text-amber-400 hover:text-amber-300 cursor-pointer whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1 text-xs font-medium text-gold hover:text-gold-soft cursor-pointer whitespace-nowrap shrink-0"
                       >
                         <Plus className="w-3.5 h-3.5" />
                         <span>Thêm câu</span>
@@ -941,14 +941,14 @@ export default function KinoSyncStudio() {
                     {/* Subtitle Editor Body */}
                     {subtitleEditMode === 'segments' ? (
                       subtitles.length === 0 ? (
-                        <div className="p-6 bg-slate-950 border border-slate-800 rounded-lg text-center space-y-3">
-                          <p className="text-xs text-slate-400">
+                        <div className="p-6 bg-canvas border border-line rounded-lg text-center space-y-3">
+                          <p className="text-xs text-muted">
                             Hiện chưa có phụ đề. Hệ thống có thể tự động nhận diện giọng nói từ file MP3 để sinh phụ đề khớp thời gian.
                           </p>
                           <button
                             type="button"
                             onClick={handleAutoGenerateSubtitlesFromAudio}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft rounded-md transition-colors cursor-pointer"
                           >
                             <Wand2 className="w-3.5 h-3.5" />
                             <span>Tự động tạo phụ đề từ giọng nói ngay</span>
@@ -966,11 +966,11 @@ export default function KinoSyncStudio() {
                                 onClick={() => handleSeek(sub.startTime + 0.05)}
                                 className={`p-2.5 rounded-lg border transition-colors cursor-pointer ${
                                   isCurrent
-                                    ? 'bg-slate-950 border-amber-400/70'
-                                    : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'
+                                    ? 'bg-canvas border-gold/70'
+                                    : 'bg-canvas/70 border-line hover:border-line-strong'
                                 }`}
                               >
-                                <div className="flex items-center justify-between gap-2 text-[11px] font-mono tabular-nums text-slate-400 mb-1.5">
+                                <div className="flex items-center justify-between gap-2 text-[11px] font-mono tabular-nums text-muted mb-1.5">
                                   <span>
                                     #{idx + 1} ·{' '}
                                     {formatDisplayTimecode(sub.startTime)} →{' '}
@@ -991,7 +991,7 @@ export default function KinoSyncStudio() {
                                         duration
                                       );
                                     }}
-                                    className="text-slate-500 hover:text-rose-400 transition-colors cursor-pointer"
+                                    className="text-faint hover:text-danger transition-colors cursor-pointer"
                                   >
                                     <Trash2 className="w-3 h-3" />
                                   </button>
@@ -1017,7 +1017,7 @@ export default function KinoSyncStudio() {
                                       duration
                                     )
                                   }
-                                  className="w-full bg-slate-900 border border-slate-800 focus:border-amber-400 rounded px-2.5 py-1.5 text-xs text-slate-100 outline-none"
+                                  className="w-full bg-surface border border-line focus:border-gold rounded px-2.5 py-1.5 text-xs text-ink outline-none"
                                 />
                               </div>
                             );
@@ -1032,7 +1032,7 @@ export default function KinoSyncStudio() {
                           value={rawSrtInput}
                           onChange={(e) => setRawSrtInput(e.target.value)}
                           placeholder="Dán nội dung chuẩn SRT hoặc nhập từng câu trên một dòng..."
-                          className="w-full bg-slate-950 border border-slate-800 focus:border-amber-400 rounded-lg p-3 text-xs font-mono text-slate-200 outline-none"
+                          className="w-full bg-canvas border border-line focus:border-gold rounded-lg p-3 text-xs font-mono text-ink outline-none"
                         />
                         <button
                           type="button"
@@ -1045,7 +1045,7 @@ export default function KinoSyncStudio() {
                             handleAutoSyncAll(parsed, uploadedImages, duration);
                             setSubtitleEditMode('segments');
                           }}
-                          className="w-full py-2 px-3 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors cursor-pointer"
+                          className="w-full py-2 px-3 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft rounded-md transition-colors cursor-pointer"
                         >
                           Áp dụng & Tự động khớp hình ảnh theo phụ đề
                         </button>
@@ -1063,21 +1063,21 @@ export default function KinoSyncStudio() {
                     <div className="flex items-center justify-between gap-2">
                       <div>
                         <h2
-                          className="text-sm font-semibold text-white"
+                          className="text-sm font-semibold text-ink"
                           style={{
                             fontFamily: 'var(--font-display), sans-serif',
                           }}
                         >
                           01. Hình ảnh đầu vào & Tự động ghép cảnh
                         </h2>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-muted mt-0.5">
                           Tải ảnh riêng hoặc để hệ thống tự tìm hình minh họa từ thư viện theo nội dung phụ đề
                         </p>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
-                      <label className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0">
+                      <label className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0">
                         <Upload className="w-3.5 h-3.5" />
                         <span>Tải ảnh lên ({uploadedImages.length})</span>
                         <input
@@ -1092,9 +1092,9 @@ export default function KinoSyncStudio() {
                       <button
                         type="button"
                         onClick={handleUseSmartStockLibrary}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-ink bg-surface-2 hover:bg-surface-3 border border-line-strong rounded-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                        <Sparkles className="w-3.5 h-3.5 text-gold" />
                         <span>Tự động tìm ảnh minh họa từ thư viện</span>
                       </button>
                     </div>
@@ -1104,7 +1104,7 @@ export default function KinoSyncStudio() {
                         {uploadedImages.map((img) => (
                           <div
                             key={img.id}
-                            className="relative group rounded-md overflow-hidden border border-slate-800 aspect-video bg-slate-950"
+                            className="relative group rounded-md overflow-hidden border border-line aspect-video bg-canvas"
                           >
                             <img
                               src={img.url}
@@ -1122,7 +1122,7 @@ export default function KinoSyncStudio() {
                                 setUploadedImages(next);
                                 handleAutoSyncAll(subtitles, next, duration);
                               }}
-                              className="absolute top-1 right-1 p-1 bg-slate-950/80 text-slate-300 hover:text-rose-400 rounded cursor-pointer"
+                              className="absolute top-1 right-1 p-1 bg-canvas/80 text-muted hover:text-danger rounded cursor-pointer"
                             >
                               <Trash2 className="w-3 h-3" />
                             </button>
@@ -1132,18 +1132,18 @@ export default function KinoSyncStudio() {
                     )}
                   </div>
 
-                  <div className="border-t border-slate-800/80" />
+                  <div className="border-t border-line/80" />
 
                   {/* Section 02: Built-In Stock Illustration Library */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-sm font-semibold text-white"
+                        className="text-sm font-semibold text-ink"
                         style={{fontFamily: 'var(--font-display), sans-serif'}}
                       >
                         02. Kho thư viện hình ảnh minh họa có sẵn
                       </h2>
-                      <span className="text-xs text-slate-400 font-mono tabular-nums">
+                      <span className="text-xs text-muted font-mono tabular-nums">
                         {filteredStockLibrary.length} cảnh 16:9 HD
                       </span>
                     </div>
@@ -1151,7 +1151,7 @@ export default function KinoSyncStudio() {
                     {/* Search & Category Filter */}
                     <div className="flex gap-2">
                       <div className="relative flex-1">
-                        <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <Search className="w-3.5 h-3.5 text-faint absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
                           type="text"
                           aria-label="Tìm kiếm ảnh trong kho thư viện"
@@ -1160,7 +1160,7 @@ export default function KinoSyncStudio() {
                             setLibrarySearchQuery(e.target.value)
                           }
                           placeholder="Tìm theo từ khóa (bình minh, thành phố, biển, rừng, cà phê)..."
-                          className="w-full pl-8 pr-3 py-1.5 bg-slate-950 border border-slate-800 focus:border-amber-400 rounded-md text-xs text-slate-100 outline-none"
+                          className="w-full pl-8 pr-3 py-1.5 bg-canvas border border-line focus:border-gold rounded-md text-xs text-ink outline-none"
                         />
                       </div>
                       <select
@@ -1169,7 +1169,7 @@ export default function KinoSyncStudio() {
                         onChange={(e) =>
                           setLibraryCategoryFilter(e.target.value)
                         }
-                        className="bg-slate-950 border border-slate-800 rounded-md px-2.5 py-1.5 text-xs text-slate-200 outline-none"
+                        className="bg-canvas border border-line rounded-md px-2.5 py-1.5 text-xs text-ink outline-none"
                       >
                         <option value="all">Tất cả chủ đề</option>
                         {BUILTIN_STOCK_LIBRARY.map((item) => (
@@ -1188,9 +1188,9 @@ export default function KinoSyncStudio() {
                         return (
                           <div
                             key={stock.id}
-                            className="flex items-center gap-3 p-2.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 transition-colors"
+                            className="flex items-center gap-3 p-2.5 rounded-lg bg-canvas border border-line hover:border-line-strong transition-colors"
                           >
-                            <div className="w-24 aspect-video rounded overflow-hidden bg-slate-900 shrink-0 border border-slate-800">
+                            <div className="w-24 aspect-video rounded overflow-hidden bg-surface shrink-0 border border-line">
                               <img
                                 src={stock.url}
                                 alt={stock.title}
@@ -1199,10 +1199,10 @@ export default function KinoSyncStudio() {
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-xs font-semibold text-white truncate">
+                              <div className="text-xs font-semibold text-ink truncate">
                                 {stock.title}
                               </div>
-                              <div className="text-[11px] text-slate-400 truncate mt-0.5">
+                              <div className="text-[11px] text-muted truncate mt-0.5">
                                 {stock.category} · Từ khóa:{' '}
                                 {stock.keywords.slice(0, 4).join(', ')}
                               </div>
@@ -1217,7 +1217,7 @@ export default function KinoSyncStudio() {
                                       stock.category
                                     )
                                   }
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-slate-950 bg-amber-400 hover:bg-amber-300 rounded transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium text-slate-950 bg-gold hover:bg-gold-soft rounded transition-colors cursor-pointer whitespace-nowrap shrink-0"
                                 >
                                   {isUsedInSelected ? (
                                     <>
@@ -1245,12 +1245,12 @@ export default function KinoSyncStudio() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-sm font-semibold text-white"
+                        className="text-sm font-semibold text-ink"
                         style={{fontFamily: 'var(--font-display), sans-serif'}}
                       >
                         01. Phong cách chuyển cảnh (Transitions)
                       </h2>
-                      <span className="text-xs font-mono tabular-nums text-amber-400">
+                      <span className="text-xs font-mono tabular-nums text-gold">
                         {transitionDuration}s
                       </span>
                     </div>
@@ -1265,14 +1265,14 @@ export default function KinoSyncStudio() {
                             onClick={() => handleApplyGlobalTransition(opt.id)}
                             className={`p-2.5 rounded-lg border text-left transition-colors cursor-pointer ${
                               active
-                                ? 'bg-amber-500/15 border-amber-400 text-white'
-                                : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
+                                ? 'bg-gold-deep/15 border-gold text-ink'
+                                : 'bg-canvas border-line text-muted hover:border-line-strong'
                             }`}
                           >
                             <div className="text-xs font-semibold">
                               {opt.label}
                             </div>
-                            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
+                            <div className="text-[11px] text-muted mt-0.5 line-clamp-1">
                               {opt.description}
                             </div>
                           </button>
@@ -1284,7 +1284,7 @@ export default function KinoSyncStudio() {
                     <div className="flex items-center justify-between gap-4 pt-1">
                       <label
                         htmlFor="transition-duration-range"
-                        className="text-xs text-slate-300 whitespace-nowrap"
+                        className="text-xs text-muted whitespace-nowrap"
                       >
                         Thời lượng chuyển cảnh:
                       </label>
@@ -1298,17 +1298,17 @@ export default function KinoSyncStudio() {
                         onChange={(e) =>
                           setTransitionDuration(parseFloat(e.target.value))
                         }
-                        className="flex-1 accent-amber-400 cursor-pointer"
+                        className="flex-1 accent-gold cursor-pointer"
                       />
                     </div>
                   </div>
 
-                  <div className="border-t border-slate-800/80" />
+                  <div className="border-t border-line/80" />
 
                   {/* Section 02: Color Grading & Visual Effects */}
                   <div className="space-y-3">
                     <h2
-                      className="text-sm font-semibold text-white"
+                      className="text-sm font-semibold text-ink"
                       style={{fontFamily: 'var(--font-display), sans-serif'}}
                     >
                       02. Bộ lọc màu & Hiệu ứng điện ảnh
@@ -1324,14 +1324,14 @@ export default function KinoSyncStudio() {
                             onClick={() => setVisualEffect(fx.id)}
                             className={`p-2.5 rounded-lg border text-left transition-colors cursor-pointer ${
                               active
-                                ? 'bg-amber-500/15 border-amber-400 text-white'
-                                : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
+                                ? 'bg-gold-deep/15 border-gold text-ink'
+                                : 'bg-canvas border-line text-muted hover:border-line-strong'
                             }`}
                           >
                             <div className="text-xs font-semibold">
                               {fx.label}
                             </div>
-                            <div className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
+                            <div className="text-[11px] text-muted mt-0.5 line-clamp-1">
                               {fx.description}
                             </div>
                           </button>
@@ -1341,7 +1341,7 @@ export default function KinoSyncStudio() {
 
                     {/* Cinema Overlays & Subtitle Styling Checkboxes */}
                     <div className="grid grid-cols-2 gap-2 pt-1">
-                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 cursor-pointer">
+                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-canvas border border-line text-xs text-ink cursor-pointer">
                         <input
                           type="checkbox"
                           checked={subtitleStyle.showKaraokeHighlight}
@@ -1351,12 +1351,12 @@ export default function KinoSyncStudio() {
                               showKaraokeHighlight: e.target.checked,
                             }))
                           }
-                          className="accent-amber-400"
+                          className="accent-gold"
                         />
                         <span>Highlight chữ Karaoke</span>
                       </label>
 
-                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 cursor-pointer">
+                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-canvas border border-line text-xs text-ink cursor-pointer">
                         <input
                           type="checkbox"
                           checked={subtitleStyle.letterboxBars}
@@ -1366,12 +1366,12 @@ export default function KinoSyncStudio() {
                               letterboxBars: e.target.checked,
                             }))
                           }
-                          className="accent-amber-400"
+                          className="accent-gold"
                         />
                         <span>Viền đen Cinema 2.39:1</span>
                       </label>
 
-                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 cursor-pointer">
+                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-canvas border border-line text-xs text-ink cursor-pointer">
                         <input
                           type="checkbox"
                           checked={subtitleStyle.vignette}
@@ -1381,12 +1381,12 @@ export default function KinoSyncStudio() {
                               vignette: e.target.checked,
                             }))
                           }
-                          className="accent-amber-400"
+                          className="accent-gold"
                         />
                         <span>Hiệu ứng tối góc (Vignette)</span>
                       </label>
 
-                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 cursor-pointer">
+                      <label className="flex items-center gap-2 p-2.5 rounded-lg bg-canvas border border-line text-xs text-ink cursor-pointer">
                         <input
                           type="checkbox"
                           checked={subtitleStyle.filmGrain}
@@ -1396,7 +1396,7 @@ export default function KinoSyncStudio() {
                               filmGrain: e.target.checked,
                             }))
                           }
-                          className="accent-amber-400"
+                          className="accent-gold"
                         />
                         <span>Hạt phim nhựa 35mm</span>
                       </label>
@@ -1405,10 +1405,10 @@ export default function KinoSyncStudio() {
                     {/* Subtitle Position & Size */}
                     <div className="grid grid-cols-2 gap-3 pt-1">
                       <div>
-                        <span className="block text-xs text-slate-400 mb-1">
+                        <span className="block text-xs text-muted mb-1">
                           Vị trí phụ đề
                         </span>
-                        <div className="flex items-center gap-1 p-1 bg-slate-950 border border-slate-800 rounded-md">
+                        <div className="flex items-center gap-1 p-1 bg-canvas border border-line rounded-md">
                           {(
                             [
                               {id: 'bottom', label: 'Dưới'},
@@ -1427,8 +1427,8 @@ export default function KinoSyncStudio() {
                               }
                               className={`flex-1 py-1 text-xs rounded transition-colors cursor-pointer ${
                                 subtitleStyle.position === pos.id
-                                  ? 'bg-slate-800 text-white font-medium'
-                                  : 'text-slate-400 hover:text-slate-200'
+                                  ? 'bg-surface-2 text-ink font-medium'
+                                  : 'text-muted hover:text-ink'
                               }`}
                             >
                               {pos.label}
@@ -1438,10 +1438,10 @@ export default function KinoSyncStudio() {
                       </div>
 
                       <div>
-                        <span className="block text-xs text-slate-400 mb-1">
+                        <span className="block text-xs text-muted mb-1">
                           Cỡ chữ phụ đề
                         </span>
-                        <div className="flex items-center gap-1 p-1 bg-slate-950 border border-slate-800 rounded-md">
+                        <div className="flex items-center gap-1 p-1 bg-canvas border border-line rounded-md">
                           {(
                             [
                               {id: 'sm', label: 'Nhỏ'},
@@ -1460,8 +1460,8 @@ export default function KinoSyncStudio() {
                               }
                               className={`flex-1 py-1 text-xs rounded transition-colors cursor-pointer ${
                                 subtitleStyle.fontSize === sz.id
-                                  ? 'bg-slate-800 text-white font-medium'
-                                  : 'text-slate-400 hover:text-slate-200'
+                                  ? 'bg-surface-2 text-ink font-medium'
+                                  : 'text-muted hover:text-ink'
                               }`}
                             >
                               {sz.label}
@@ -1479,12 +1479,12 @@ export default function KinoSyncStudio() {
           {/* RIGHT / CENTER MAIN STAGE: Real-Time Canvas Video Player & Transport Controls (7 cols) */}
           <section
             aria-label="Màn hình xem trước video thời gian thực"
-            className="lg:col-span-7 flex flex-col justify-between p-6 bg-slate-950"
+            className="lg:col-span-7 flex flex-col justify-between p-6 bg-canvas"
           >
             {/* Preview Sub-Header Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-4 pb-4">
-              <div className="flex items-center gap-2 text-xs text-slate-400">
-                <span className="font-semibold text-slate-200">
+              <div className="flex items-center gap-2 text-xs text-muted">
+                <span className="font-semibold text-ink">
                   Màn hình kiểm duyệt (Live Canvas Renderer)
                 </span>
                 <span aria-hidden="true">·</span>
@@ -1501,7 +1501,7 @@ export default function KinoSyncStudio() {
               </div>
 
               {/* Aspect Ratio Switcher */}
-              <div className="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-lg">
+              <div className="flex items-center gap-1 p-1 bg-surface border border-line rounded-lg">
                 {(
                   [
                     {id: '16:9', label: '16:9 Ngang'},
@@ -1517,8 +1517,8 @@ export default function KinoSyncStudio() {
                     }
                     className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                       exportConfig.aspectRatio === ar.id
-                        ? 'bg-slate-800 text-white'
-                        : 'text-slate-400 hover:text-slate-200'
+                        ? 'bg-surface-2 text-ink'
+                        : 'text-muted hover:text-ink'
                     }`}
                   >
                     {ar.label}
@@ -1528,9 +1528,9 @@ export default function KinoSyncStudio() {
             </div>
 
             {/* Canvas Viewport Frame */}
-            <div className="flex-1 flex items-center justify-center bg-slate-900/50 border border-slate-800/90 rounded-xl p-4 min-h-[340px]">
+            <div className="flex-1 flex items-center justify-center bg-surface/50 border border-line/90 rounded-xl p-4 min-h-[340px]">
               <div
-                className="relative flex items-center justify-center overflow-hidden rounded-lg border border-slate-800 shadow-2xl bg-black"
+                className="relative flex items-center justify-center overflow-hidden rounded-lg border border-line shadow-2xl bg-black"
                 style={{
                   maxHeight: '420px',
                   aspectRatio:
@@ -1560,7 +1560,7 @@ export default function KinoSyncStudio() {
             <div className="pt-4 space-y-3">
               {/* Interactive Seek Range */}
               <div className="flex items-center gap-3">
-                <span className="text-xs font-mono tabular-nums text-amber-400 w-14">
+                <span className="text-xs font-mono tabular-nums text-gold w-14">
                   {formatDisplayTimecode(currentTime)}
                 </span>
                 <input
@@ -1571,9 +1571,9 @@ export default function KinoSyncStudio() {
                   step={0.05}
                   value={currentTime}
                   onChange={(e) => handleSeek(parseFloat(e.target.value))}
-                  className="flex-1 accent-amber-400 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+                  className="flex-1 accent-gold cursor-pointer h-1.5 bg-surface-2 rounded-lg"
                 />
-                <span className="text-xs font-mono tabular-nums text-slate-400 w-14 text-right">
+                <span className="text-xs font-mono tabular-nums text-muted w-14 text-right">
                   {formatDisplayTimecode(duration)}
                 </span>
               </div>
@@ -1585,7 +1585,7 @@ export default function KinoSyncStudio() {
                     type="button"
                     onClick={() => setIsPlaying((p) => !p)}
                     aria-label={isPlaying ? 'Tạm dừng video' : 'Phát video'}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                   >
                     {isPlaying ? (
                       <>
@@ -1607,7 +1607,7 @@ export default function KinoSyncStudio() {
                       handleSeek(0);
                     }}
                     aria-label="Đưa về đầu video"
-                    className="p-2 text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg transition-colors cursor-pointer"
+                    className="p-2 text-muted hover:text-ink bg-surface hover:bg-surface-2 border border-line rounded-lg transition-colors cursor-pointer"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                   </button>
@@ -1616,27 +1616,27 @@ export default function KinoSyncStudio() {
                     type="button"
                     onClick={() => setIsMuted((m) => !m)}
                     aria-label={isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
-                    className="p-2 text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg transition-colors cursor-pointer"
+                    className="p-2 text-muted hover:text-ink bg-surface hover:bg-surface-2 border border-line rounded-lg transition-colors cursor-pointer"
                   >
                     {isMuted ? (
-                      <VolumeX className="w-3.5 h-3.5 text-rose-400" />
+                      <VolumeX className="w-3.5 h-3.5 text-danger" />
                     ) : (
-                      <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+                      <Volume2 className="w-3.5 h-3.5 text-ok" />
                     )}
                   </button>
                 </div>
 
                 {/* Live Synchronization Feedback Text */}
-                <div className="text-xs text-slate-300 flex-1 min-w-[200px]">
+                <div className="text-xs text-muted flex-1 min-w-[200px]">
                   {statusBanner}
                 </div>
 
                 <button
                   type="button"
                   onClick={() => handleAutoSyncAll()}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-200 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-ink bg-surface hover:bg-surface-2 border border-line rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                 >
-                  <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+                  <RefreshCw className="w-3.5 h-3.5 text-gold" />
                   <span>Đồng bộ lại</span>
                 </button>
               </div>

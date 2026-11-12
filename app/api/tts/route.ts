@@ -1,19 +1,20 @@
-import {GoogleGenAI} from '@google/genai';
-import {NextRequest, NextResponse} from 'next/server';
+import {NextResponse} from 'next/server';
+import {
+  ALLOWED_VOICES,
+  MAX_TTS_CHARS,
+  synthesizeSpeech,
+  TtsError,
+  type VoiceName,
+} from '@/lib/gemini-tts';
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  httpOptions: {
-    headers: {
-      'User-Agent': 'aistudio-build',
-    },
-  },
-});
+export const runtime = 'nodejs';
+export const maxDuration = 60;
 
-export async function POST(req: NextRequest) {
+/** Endpoint cũ của trình dựng thủ công — nay dùng chung bộ giọng đọc với /api/narration. */
+export async function POST(request: Request) {
   try {
-    const {text, voiceName = 'Kore'} = (await req.json()) as {
-      text: string;
+    const {text, voiceName = 'Kore'} = (await request.json()) as {
+      text?: string;
       voiceName?: string;
     };
 
@@ -23,48 +24,26 @@ export async function POST(req: NextRequest) {
         {status: 400}
       );
     }
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash-lite-tts',
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            {
-              text: text.trim(),
-            },
-          ],
-        },
-      ],
-      config: {
-        responseModalities: ['AUDIO'],
-        speechConfig: {
-          voiceConfig: {
-            prebuiltVoiceConfig: {voiceName},
-          },
-        },
-      },
-    });
-
-    const base64Audio =
-      response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-
-    if (!base64Audio) {
+    if (text.length > MAX_TTS_CHARS) {
       return NextResponse.json(
-        {error: 'Không nhận được dữ liệu âm thanh từ máy chủ.'},
-        {status: 500}
+        {error: `Tối đa ${MAX_TTS_CHARS} ký tự cho mỗi lần tạo giọng đọc.`},
+        {status: 413}
       );
     }
 
+    const voice = ALLOWED_VOICES.includes(voiceName as VoiceName)
+      ? (voiceName as VoiceName)
+      : 'Kore';
+
+    const result = await synthesizeSpeech(text, voice);
     return NextResponse.json({
-      base64Audio,
-      mimeType: 'audio/wav',
+      base64Audio: result.audioBase64,
+      mimeType: result.mimeType,
     });
-  } catch (error: unknown) {
+  } catch (error) {
+    const status = error instanceof TtsError ? error.status : 500;
     const message =
-      error instanceof Error
-        ? error.message
-        : 'Không thể tạo giọng đọc tự động.';
-    return NextResponse.json({error: message}, {status: 500});
+      error instanceof Error ? error.message : 'Không thể tạo giọng đọc tự động.';
+    return NextResponse.json({error: message}, {status});
   }
 }

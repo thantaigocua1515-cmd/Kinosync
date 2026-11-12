@@ -1,4 +1,5 @@
 import {
+  ChapterCard,
   SceneItem,
   SubtitleSegment,
   SubtitleStyleConfig,
@@ -187,7 +188,8 @@ export function drawVideoFrame(
   imageCache: Map<string, HTMLImageElement>,
   visualEffect: VisualEffectPreset,
   subtitleStyle: SubtitleStyleConfig,
-  transitionDurationSec: number = 0.85
+  transitionDurationSec: number = 0.85,
+  chapterCards: ChapterCard[] = []
 ) {
   ctx.save();
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -549,6 +551,90 @@ export function drawVideoFrame(
       });
     });
   }
+
+  // Chapter title card (chỉ vài giây đầu mỗi chương)
+  drawChapterCard(ctx, canvasWidth, canvasHeight, timeSec, chapterCards);
+
+  ctx.restore();
+}
+
+const CARD_HOLD_SEC = 5.6;
+
+function drawChapterCard(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  timeSec: number,
+  cards: ChapterCard[]
+) {
+  if (cards.length === 0) return;
+
+  let card: ChapterCard | null = null;
+  for (const candidate of cards) {
+    if (timeSec >= candidate.time && timeSec < candidate.time + CARD_HOLD_SEC) {
+      card = candidate;
+      break;
+    }
+  }
+  if (!card) return;
+
+  const local = timeSec - card.time;
+  const fadeIn = Math.min(1, local / 0.6);
+  const fadeOut = Math.min(1, (CARD_HOLD_SEC - local) / 0.9);
+  const alpha = Math.max(0, Math.min(fadeIn, fadeOut));
+  if (alpha <= 0) return;
+
+  const scale = height / 1080;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  const scrim = ctx.createLinearGradient(0, 0, width * 0.85, height);
+  scrim.addColorStop(0, 'rgba(6, 7, 9, 0.92)');
+  scrim.addColorStop(0.62, 'rgba(6, 7, 9, 0.72)');
+  scrim.addColorStop(1, 'rgba(6, 7, 9, 0.18)');
+  ctx.fillStyle = scrim;
+  ctx.fillRect(0, 0, width, height);
+
+  const left = Math.round(width * 0.075);
+  const kickerY = height * 0.42;
+
+  if (card.kicker) {
+    ctx.font = `600 ${Math.round(17 * scale)}px "JetBrains Mono", ui-monospace, monospace`;
+    ctx.fillStyle = '#e7b25f';
+    ctx.textAlign = 'left';
+    (ctx as CanvasRenderingContext2D & {letterSpacing?: string}).letterSpacing =
+      `${Math.round(5 * scale)}px`;
+    ctx.fillText(card.kicker.toUpperCase(), left, kickerY);
+    (ctx as CanvasRenderingContext2D & {letterSpacing?: string}).letterSpacing = '0px';
+  }
+
+  const titleSize = Math.round(58 * scale);
+  ctx.font = `600 ${titleSize}px Georgia, "Times New Roman", serif`;
+  ctx.fillStyle = '#f6f2e9';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+
+  const maxWidth = width * 0.72;
+  const words = card.title.split(/\s+/);
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const candidate = line ? `${line} ${word}` : word;
+    if (ctx.measureText(candidate).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+      if (lines.length === 3) break;
+    } else {
+      line = candidate;
+    }
+  }
+  if (line && lines.length < 3) lines.push(line);
+
+  const lineHeight = Math.round(titleSize * 1.2);
+  lines.forEach((text, index) => {
+    ctx.fillText(text, left, kickerY + Math.round(34 * scale) + index * lineHeight);
+  });
 
   ctx.restore();
 }

@@ -50,6 +50,12 @@ export interface SceneItem {
   matchedKeyword?: string;
 }
 
+export interface ChapterCard {
+  time: number;
+  title: string;
+  kicker?: string;
+}
+
 export interface SubtitleStyleConfig {
   fontSize: 'sm' | 'md' | 'lg';
   position: 'bottom' | 'center' | 'top';

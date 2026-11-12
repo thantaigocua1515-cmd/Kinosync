@@ -63,20 +63,20 @@ export default function ExportModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="export-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-xs p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-canvas/80 backdrop-blur-xs p-4"
     >
-      <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-xl p-6 text-slate-100 shadow-2xl">
+      <div className="w-full max-w-xl bg-surface border border-line rounded-xl p-6 text-ink shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-line">
           <div>
             <h2
               id="export-modal-title"
-              className="text-lg font-semibold text-white"
+              className="text-lg font-semibold text-ink"
               style={{fontFamily: 'var(--font-display), sans-serif'}}
             >
               Xuất Video MP4 Độ Phân Giải Cao
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-muted mt-0.5">
               Mã hóa trực tiếp định dạng H.264 MP4 với hình ảnh, chuyển cảnh và phụ đề đã đồng bộ
             </p>
           </div>
@@ -84,7 +84,7 @@ export default function ExportModal({
             type="button"
             onClick={onClose}
             aria-label="Đóng cửa sổ xuất video"
-            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-2 text-muted hover:text-ink rounded-lg hover:bg-surface-2 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -94,7 +94,7 @@ export default function ExportModal({
         <div className="py-5 space-y-4">
           {/* Resolution */}
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-2">
+            <label className="block text-xs font-medium text-muted mb-2">
               Độ phân giải đầu ra (Resolution)
             </label>
             <div className="grid grid-cols-3 gap-2.5">
@@ -118,14 +118,14 @@ export default function ExportModal({
                     onClick={() => onUpdateConfig({resolution: item.id})}
                     className={`p-3 rounded-lg border text-left transition-colors cursor-pointer ${
                       active
-                        ? 'bg-amber-500/15 border-amber-400 text-white'
-                        : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
+                        ? 'bg-gold-deep/15 border-gold text-ink'
+                        : 'bg-canvas border-line text-muted hover:border-line-strong'
                     }`}
                   >
                     <div className="text-xs font-semibold font-mono tabular-nums">
                       {item.label}
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">
+                    <div className="text-[11px] text-muted mt-0.5">
                       {item.desc}
                     </div>
                   </button>
@@ -137,10 +137,10 @@ export default function ExportModal({
           {/* Aspect Ratio & Frame Rate */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-2">
+              <label className="block text-xs font-medium text-muted mb-2">
                 Tỷ lệ khung hình
               </label>
-              <div className="flex items-center gap-1 p-1 bg-slate-950 border border-slate-800 rounded-lg">
+              <div className="flex items-center gap-1 p-1 bg-canvas border border-line rounded-lg">
                 {(
                   [
                     {id: '16:9', label: '16:9 Ngang'},
@@ -155,8 +155,8 @@ export default function ExportModal({
                     onClick={() => onUpdateConfig({aspectRatio: ar.id})}
                     className={`flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                       exportConfig.aspectRatio === ar.id
-                        ? 'bg-slate-800 text-white'
-                        : 'text-slate-400 hover:text-slate-200'
+                        ? 'bg-surface-2 text-ink'
+                        : 'text-muted hover:text-ink'
                     }`}
                   >
                     {ar.label}
@@ -166,10 +166,10 @@ export default function ExportModal({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-2">
+              <label className="block text-xs font-medium text-muted mb-2">
                 Tốc độ khung hình (FPS)
               </label>
-              <div className="flex items-center gap-1 p-1 bg-slate-950 border border-slate-800 rounded-lg">
+              <div className="flex items-center gap-1 p-1 bg-canvas border border-line rounded-lg">
                 {([24, 30, 60] as const).map((fpsVal) => (
                   <button
                     key={fpsVal}
@@ -178,8 +178,8 @@ export default function ExportModal({
                     onClick={() => onUpdateConfig({fps: fpsVal})}
                     className={`flex-1 py-1.5 px-2 text-xs font-mono tabular-nums font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                       exportConfig.fps === fpsVal
-                        ? 'bg-slate-800 text-white'
-                        : 'text-slate-400 hover:text-slate-200'
+                        ? 'bg-surface-2 text-ink'
+                        : 'text-muted hover:text-ink'
                     }`}
                   >
                     {fpsVal} FPS
@@ -190,7 +190,7 @@ export default function ExportModal({
           </div>
 
           {/* Summary Specs Line (Unboxed zero-pill metadata) */}
-          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 pt-1">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted pt-1">
             <span>Định dạng: MP4 (H.264 / AVC1)</span>
             <span aria-hidden="true">·</span>
             <span className="font-mono tabular-nums">
@@ -204,29 +204,29 @@ export default function ExportModal({
 
           {/* Progress Bar or Completed Output */}
           {isExporting && (
-            <div className="p-4 bg-slate-950 border border-slate-800 rounded-lg space-y-2">
+            <div className="p-4 bg-canvas border border-line rounded-lg space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="flex items-center gap-2 text-amber-300 font-medium">
+                <span className="flex items-center gap-2 text-gold-soft font-medium">
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   {exportStatusText || 'Đang xử lý khung hình...'}
                 </span>
-                <span className="font-mono tabular-nums font-semibold text-white">
+                <span className="font-mono tabular-nums font-semibold text-ink">
                   {exportProgress}%
                 </span>
               </div>
-              <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-surface-2 rounded-full overflow-hidden">
                 <div
                   style={{width: `${exportProgress}%`}}
-                  className="h-full bg-amber-500 transition-transform duration-150"
+                  className="h-full bg-gold-deep transition-transform duration-150"
                 />
               </div>
             </div>
           )}
 
           {exportedVideoUrl && !isExporting && (
-            <div className="p-4 bg-slate-950 border border-emerald-500/40 rounded-lg space-y-3">
+            <div className="p-4 bg-canvas border border-emerald-500/40 rounded-lg space-y-3">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 text-xs font-medium text-emerald-400">
+                <div className="flex items-center gap-2 text-xs font-medium text-ok">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>
                     Video MP4 đã sẵn sàng tải xuống ({exportedResolutionLabel})
@@ -238,7 +238,7 @@ export default function ExportModal({
                 <a
                   href={exportedVideoUrl}
                   download={exportedFilename}
-                  className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft rounded-lg transition-colors whitespace-nowrap shrink-0"
                 >
                   <Download className="w-3.5 h-3.5" />
                   Tải xuống tệp .MP4 ({exportedConfigLabel(exportConfig)})
@@ -247,7 +247,7 @@ export default function ExportModal({
                 <button
                   type="button"
                   onClick={handleDownloadSrt}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-ink bg-surface-2 hover:bg-surface-3 border border-line-strong rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   Tải kèm tệp phụ đề .SRT
@@ -258,11 +258,11 @@ export default function ExportModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-between pt-4 border-t border-line">
           <button
             type="button"
             onClick={handleDownloadSrt}
-            className="text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs text-muted hover:text-ink transition-colors cursor-pointer whitespace-nowrap shrink-0"
           >
             Xuất riêng phụ đề (.SRT)
           </button>
@@ -271,7 +271,7 @@ export default function ExportModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              className="px-4 py-2 text-xs font-medium text-muted hover:text-ink bg-surface-2 hover:bg-surface-3 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               Đóng
             </button>
@@ -279,7 +279,7 @@ export default function ExportModal({
               type="button"
               disabled={isExporting}
               onClick={onStartExport}
-              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-950 bg-gold hover:bg-gold-soft disabled:opacity-50 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               <Film className="w-3.5 h-3.5" />
               {isExporting

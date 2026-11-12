@@ -1,56 +1,72 @@
-import type {Metadata} from 'next';
-import {Plus_Jakarta_Sans, Public_Sans, JetBrains_Mono} from 'next/font/google';
+import type {Metadata, Viewport} from 'next';
+import {Be_Vietnam_Pro, Playfair_Display, JetBrains_Mono} from 'next/font/google';
 import './globals.css';
 
-const plusJakarta = Plus_Jakarta_Sans({
+const beVietnam = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
-  weight: ['500', '600', '700'],
-  variable: '--font-display',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-body-face',
+  display: 'swap',
 });
 
-const publicSans = Public_Sans({
+const playfair = Playfair_Display({
   subsets: ['latin', 'vietnamese'],
   weight: ['400', '500', '600'],
-  variable: '--font-sans',
+  variable: '--font-display-face',
+  display: 'swap',
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'vietnamese'],
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
   weight: ['400', '500'],
-  variable: '--font-mono',
+  variable: '--font-mono-face',
+  display: 'swap',
 });
+
+const tagline =
+  'Biến truyện chữ thành phim đọc truyện có giọng đọc AI, phụ đề khớp từng câu và hình ảnh minh họa — dài 60–90 phút, xuất MP4 ngay trên trình duyệt.';
 
 export const metadata: Metadata = {
-  title: 'KinoSync Studio — Trình Dựng Video Tự Động',
-  description:
-    'Studio dựng video tự động khớp nhạc MP3, hình ảnh, phụ đề thông minh và xuất video MP4 độ phân giải cao.',
+  title: {
+    default: 'Kinosync — Truyện chữ thành phim đọc truyện',
+    template: '%s · Kinosync',
+  },
+  description: tagline,
+  applicationName: 'Kinosync Studio',
+  keywords: [
+    'đọc truyện',
+    'video đọc truyện',
+    'truyện audio',
+    'text to speech',
+    'truyenok',
+    'kinosync',
+  ],
   openGraph: {
-    title: 'KinoSync Studio — Trình Dựng Video Tự Động',
-    description:
-      'Studio dựng video tự động khớp nhạc MP3, hình ảnh, phụ đề thông minh và xuất video MP4 độ phân giải cao.',
+    title: 'Kinosync — Truyện chữ thành phim đọc truyện',
+    description: tagline,
     type: 'website',
+    locale: 'vi_VN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KinoSync Studio — Trình Dựng Video Tự Động',
-    description:
-      'Studio dựng video tự động khớp nhạc MP3, hình ảnh, phụ đề thông minh và xuất video MP4 độ phân giải cao.',
+    title: 'Kinosync — Truyện chữ thành phim đọc truyện',
+    description: tagline,
   },
+  robots: {index: true, follow: true},
+};
+
+export const viewport: Viewport = {
+  themeColor: '#090a0c',
+  colorScheme: 'dark',
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html
       lang="vi"
-      className={`${plusJakarta.variable} ${publicSans.variable} ${jetbrainsMono.variable} dark`}
+      className={`${beVietnam.variable} ${playfair.variable} ${jetbrains.variable} dark`}
     >
-      <body
-        suppressHydrationWarning
-        className="bg-slate-950 text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-200"
-        style={{fontFamily: 'var(--font-sans), sans-serif'}}
-      >
-        {children}
-      </body>
+      <body className="film-grain min-h-dvh antialiased">{children}</body>
     </html>
   );
 }
