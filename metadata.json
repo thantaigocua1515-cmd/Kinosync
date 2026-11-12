@@ -1,0 +1,6 @@
+{
+  "name": "KinoSync Studio — Trình Dựng Video Tự Động",
+  "description": "Studio dựng video tự động khớp nhạc MP3, hình ảnh, phụ đề thông minh và xuất video MP4 độ phân giải cao.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
